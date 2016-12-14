@@ -2,7 +2,7 @@
 type Replacer<V> = (oldValue: V) => V;
 type ValueOrReplacer<V> = V | Replacer<V>;
 type IndexOrSearcher<V> = number | ((val: V) => boolean);
-type Mutilator<T> = {
+type Mutator<T> = {
   [P in keyof T]?: ValueOrReplacer<T[P]>;
 };
 
@@ -16,16 +16,16 @@ function value<V>(oldVal: V, valueOrReplacer: ValueOrReplacer<V> | undefined) {
   }
 }
 
-export function assign<T>(indexOrSearcher: IndexOrSearcher<T>, valueOrReplacer: ValueOrReplacer<T>): Replacer<T[]>;
-export function assign<T>(mutilator: Mutilator<T>): Replacer<T>;
-export function assign<T, P extends keyof T>(original: T, mutilator: Mutilator<T>): T;
-export function assign<T>(original: ReadonlyArray<T>, indexOrSearcher: IndexOrSearcher<T>, valueOrReplacer: ValueOrReplacer<T>); // tslint:disable-line max-line-length
-export function assign<T>() {
+export function update<T>(indexOrSearcher: IndexOrSearcher<T>, valueOrReplacer: ValueOrReplacer<T>): Replacer<T[]>;
+export function update<T>(mutator: Mutator<T>): Replacer<T>;
+export function update<T, P extends keyof T>(original: T, mutator: Mutator<T>): T;
+export function update<T>(original: ReadonlyArray<T>, indexOrSearcher: IndexOrSearcher<T>, valueOrReplacer: ValueOrReplacer<T>); // tslint:disable-line max-line-length
+export function update<T>() {
   // Replacer factory for Object
   if (arguments.length === 1) {
-    const mutilator = arguments[0] as Mutilator<T>;
+    const mutator = arguments[0] as Mutator<T>;
     return (p: T) => {
-      return assign(p, mutilator);
+      return update(p, mutator);
     };
   }
 
@@ -35,7 +35,7 @@ export function assign<T>() {
     const valueOrReplacer = arguments[1] as ValueOrReplacer<T>;
 
     return (p: ReadonlyArray<T>) => {
-      return assign(p, indexOrSearcher, valueOrReplacer);
+      return update(p, indexOrSearcher, valueOrReplacer);
     };
   }
 
@@ -51,11 +51,11 @@ export function assign<T>() {
   throw new Error("Unknown options");
 }
 
-function objectAssign<T, P extends keyof T>(original: T, mutilator: Mutilator<T>): T {
+function objectAssign<T, P extends keyof T>(original: T, mutator: Mutator<T>): T {
   const partial: Partial<T> = {} as Partial<T>;
-  for (const key in mutilator) {
-    if (mutilator.hasOwnProperty(key)) {
-      const valueOrReplacer = mutilator[key];
+  for (const key in mutator) {
+    if (mutator.hasOwnProperty(key)) {
+      const valueOrReplacer = mutator[key];
       let newValue = value(original[key], valueOrReplacer);
 
       if (newValue !== original[key]) {
