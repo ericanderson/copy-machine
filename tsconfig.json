@@ -4,6 +4,7 @@
     "outDir": "lib",
     "sourceMap": true,
     "target": "es5",
+    "declaration": true,
     "lib": [
       "es2015"
     ],

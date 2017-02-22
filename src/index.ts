@@ -1,8 +1,8 @@
 
-type Replacer<V> = (oldValue: V) => V;
-type ValueOrReplacer<V> = V | Replacer<V>;
-type IndexOrSearcher<V> = number | ((val: V) => boolean);
-type Mutator<T> = {
+export type Replacer<V> = (oldValue: V) => V;
+export type ValueOrReplacer<V> = V | Replacer<V>;
+export type IndexOrSearcher<V> = number | ((val: V) => boolean);
+export type Mutator<T> = {
   [P in keyof T]?: ValueOrReplacer<T[P]>;
 };
 
