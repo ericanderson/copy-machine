@@ -1,4 +1,4 @@
-import {update as update} from "../";
+import { update } from "../";
 
 type Person = {
   name: string;
@@ -48,10 +48,25 @@ test("simple case", () => {
       blerg: "stuff",
     },
   };
-  const b = update(a, {foo: "baz"});
+  const b = update(a, { foo: "baz" });
 
   expect(b).not.toBe(a);
   expect(b.foo).toBe("baz");
+});
+
+test("falsy case", () => {
+  const a = {
+    foo: {
+      bar: true,
+      baz: "baz",
+    },
+  };
+  const b = update(a, {
+    foo: update(a.foo, { bar: false }),
+  });
+
+  expect(b).not.toBe(a);
+  expect(b.foo.bar).toBe(false);
 });
 
 test("array case", () => {
@@ -83,8 +98,8 @@ test("it works", () => {
 test("clean syntax", () => {
   const newFamily = update(family, {
     people: update(0, update({
-        name: "Robert",
-      }),
+      name: "Robert",
+    }),
     ),
   });
 

@@ -9,16 +9,14 @@ export type Mutator<T> = {
 function value<V>(oldVal: V, valueOrReplacer: ValueOrReplacer<V> | undefined) {
   if (valueOrReplacer instanceof Function) {
     return valueOrReplacer(oldVal);
-  } else if (valueOrReplacer) {
-    return valueOrReplacer;
   } else {
-    return undefined;
+    return valueOrReplacer;
   }
 }
 
 export function update<T>(indexOrSearcher: IndexOrSearcher<T>, valueOrReplacer: ValueOrReplacer<T>): Replacer<T[]>;
 export function update<T>(mutator: Mutator<T>): Replacer<T>;
-export function update<T, P extends keyof T>(original: T, mutator: Mutator<T>): T;
+export function update<T>(original: T, mutator: Mutator<T>): T;
 export function update<T>(original: ReadonlyArray<T>, indexOrSearcher: IndexOrSearcher<T>, valueOrReplacer: ValueOrReplacer<T>); // tslint:disable-line max-line-length
 export function update<T>() {
   // Replacer factory for Object
