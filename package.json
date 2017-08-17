@@ -10,6 +10,7 @@
     "clean": "rm -rf lib",
     "lint": "tslint 'src/**.ts'",
     "precommit": "lint-staged",
+    "prettier:check": "prettier --print-width 120 --trailing-comma es5 \"src/**/*.{ts,tsx}\" --list-different",
     "test": "jest",
     "watch:test": "jest --watch"
   },

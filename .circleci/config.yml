@@ -1,0 +1,21 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/mern-starter
+    docker:
+      - image: circleci/node:8.4.0
+    steps:
+      - checkout
+      - restore_cache:
+          key: yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn install --pure-lockfile
+      - save_cache:
+          key: yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.yarn-cache
+      - run: yarn run build
+      - run: yarn run test
+      - run: yarn run lint
+      - run: yarn run prettier:check
