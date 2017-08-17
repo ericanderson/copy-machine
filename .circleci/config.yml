@@ -19,3 +19,5 @@ jobs:
       - run: yarn run test
       - run: yarn run lint
       - run: yarn run prettier:check
+      - store_test_results:
+          path: ./build/jest
