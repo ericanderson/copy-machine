@@ -9,6 +9,7 @@
     "build": "yarn run clean && tsc",
     "clean": "rm -rf lib",
     "lint": "tslint 'src/**.ts'",
+    "precommit": "lint-staged",
     "test": "jest",
     "watch:test": "jest --watch"
   },
@@ -19,17 +20,28 @@
     "testRegex": "src/__tests__/.*\\.test\\.(ts|tsx)$",
     "moduleFileExtensions": [
       "ts",
-      "tsx",
       "js"
-    ],
-    "testResultsProcessor": "<rootDir>/node_modules/ts-jest/coverageprocessor.js"
+    ]
   },
   "devDependencies": {
     "@types/jest": "^20.0.7",
     "es6-shim": "^0.35.3",
+    "husky": "^0.14.3",
     "jest": "^20.0.4",
+    "lint-staged": "^4.0.3",
+    "prettier": "^1.5.3",
     "ts-jest": "^20.0.10",
     "tslint": "^5.6.0",
     "typescript": "^2.4.2"
+  },
+  "lint-staged": {
+    "src/**/*.ts": [
+      "tslint --fix",
+      "prettier --print-width 120 --trailing-comma es5 --write",
+      "git add"
+    ],
+    "*.md": [
+      "markdownlint"
+    ]
   }
 }

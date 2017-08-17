@@ -27,15 +27,19 @@ interface Post extends Content {
 const family: Group = {
   people: [
     {
-      kids: [{
-        name: "Jane",
-      }],
+      kids: [
+        {
+          name: "Jane",
+        },
+      ],
       name: "Romeo",
     },
     {
-      kids: [{
-        name: "Steve",
-      }],
+      kids: [
+        {
+          name: "Steve",
+        },
+      ],
       name: "Juliet",
     },
   ],
@@ -83,11 +87,12 @@ test("array case", () => {
 
 test("it works", () => {
   const newFamily = update(family, {
-    people: (p) => update(p, 0, (bob) => {
-      return update(bob, {
-        name: "Robert",
-      });
-    }),
+    people: p =>
+      update(p, 0, bob => {
+        return update(bob, {
+          name: "Robert",
+        });
+      }),
   });
 
   expect(newFamily).not.toBe(family);
@@ -97,9 +102,11 @@ test("it works", () => {
 
 test("clean syntax", () => {
   const newFamily = update(family, {
-    people: update(0, update({
-      name: "Robert",
-    }),
+    people: update(
+      0,
+      update({
+        name: "Robert",
+      })
     ),
   });
 
@@ -111,9 +118,10 @@ test("clean syntax", () => {
 test("clean syntax keeps value equals", () => {
   const newFamily = update(family, {
     people: update(
-      0, update({
+      0,
+      update({
         name: "Romeo",
-      }),
+      })
     ),
   });
 
@@ -124,9 +132,10 @@ test("arrays work with searcher", () => {
   const findRomeo = (p: Person) => p.name === "romeo";
   const newFamily = update(family, {
     people: update(
-      findRomeo, update({
+      findRomeo,
+      update({
         name: "Romeo",
-      }),
+      })
     ),
   });
 
@@ -155,10 +164,10 @@ test("complex case", () => {
   // Set the author of the first post to "Eric"
   state = update(state, {
     posts: update(
-      0, update<Post>({
+      0,
+      update<Post>({
         author: "Eric",
-      }),
+      })
     ),
   });
-
 });
