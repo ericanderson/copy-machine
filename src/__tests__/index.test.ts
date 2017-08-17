@@ -1,13 +1,13 @@
 import { update } from "../";
 
-type Person = {
+interface Person {
   name: string;
   kids?: Person[];
-};
+}
 
-type Group = {
+interface Group {
   people: Person[];
-};
+}
 
 interface Blog {
   posts: Post[];

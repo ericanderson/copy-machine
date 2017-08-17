@@ -50,11 +50,11 @@ export function update<T>() {
 }
 
 function objectAssign<T, P extends keyof T>(original: T, mutator: Mutator<T>): T {
-  const partial: Partial<T> = {} as Partial<T>;
+  const partial: Partial<T> = {};
   for (const key in mutator) {
     if (mutator.hasOwnProperty(key)) {
       const valueOrReplacer = mutator[key];
-      let newValue = value(original[key], valueOrReplacer);
+      const newValue = value(original[key], valueOrReplacer);
 
       if (newValue !== original[key]) {
         partial[key] = newValue;
@@ -63,6 +63,7 @@ function objectAssign<T, P extends keyof T>(original: T, mutator: Mutator<T>): T
   }
 
   if (Object.keys(partial).length > 0) {
+    // tslint:disable-next-line:prefer-object-spread
     return Object.assign({}, original, partial);
   } else {
     return original;
