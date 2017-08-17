@@ -22,13 +22,23 @@
     "moduleFileExtensions": [
       "ts",
       "js"
-    ]
+    ],
+    "testResultsProcessor": "./node_modules/jest-junit"
+  },
+  "jest-junit": {
+    "suiteName": "jest tests",
+    "output": "./build/jest/junit.xml",
+    "classNameTemplate": "{classname}-{title}",
+    "titleTemplate": "{classname}-{title}",
+    "ancestorSeparator": " › ",
+    "usePathForSuiteName": "true"
   },
   "devDependencies": {
     "@types/jest": "^20.0.7",
     "es6-shim": "^0.35.3",
     "husky": "^0.14.3",
     "jest": "^20.0.4",
+    "jest-junit": "^2.1.0",
     "lint-staged": "^4.0.3",
     "prettier": "^1.5.3",
     "ts-jest": "^20.0.10",
