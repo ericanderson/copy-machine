@@ -1,6 +1,6 @@
 {
   "name": "copy-machine",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "author": "Eric Anderson <e@ericlanderson.com>",
@@ -12,7 +12,8 @@
     "precommit": "lint-staged",
     "prettier:check": "prettier --print-width 120 --trailing-comma es5 \"src/**/*.{ts,tsx}\" --list-different",
     "test": "jest",
-    "watch:test": "jest --watch"
+    "watch:test": "jest --watch",
+    "prepublish": "yarn run clean && yarn run build"
   },
   "jest": {
     "transform": {
